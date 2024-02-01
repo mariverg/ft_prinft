@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_prinft_hex_tolower.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mariverg <mariverg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 11:14:58 by mariverg          #+#    #+#             */
-/*   Updated: 2024/02/01 13:02:51 by mariverg         ###   ########.fr       */
+/*   Created: 2024/01/30 17:29:03 by mariverg          #+#    #+#             */
+/*   Updated: 2024/02/01 12:51:08 by mariverg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-//para imprimir el %s
-int	ft_putstr(char *str)
+//imprimir %x
+static void	ft_putnbr_hex(unsigned long nbr, int *len)
 {
-	int	i;
+	if (nbr >= 16)
+		ft_putnbr_hex(nbr / 16, len);
+	ft_putchar("0123456789abcdef"[nbr % 16]);
+	*len += 1;
+}
 
-	i = 0;
-	if (str == NULL)
-		str = "(null)";
-	while (str[i] != '\0')
-	{
-		write(1, &str[i], 1);
-		i++;
-	}
-	return (i);
+int	ft_prinft_hex_tolower(unsigned int nbr)
+{
+	int	count;
+
+	count = 0;
+	ft_putnbr_hex(nbr, &count);
+	return (count);
+	if (nbr % 16 < 10)
+		ft_putchar(nbr % 16 + '0');
+	else
+		ft_putchar(nbr % 16 - 10 + 'a');
+	return (0);
 }

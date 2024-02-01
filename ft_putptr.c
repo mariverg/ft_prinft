@@ -1,28 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putstr.c                                        :+:      :+:    :+:   */
+/*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mariverg <mariverg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 11:14:58 by mariverg          #+#    #+#             */
-/*   Updated: 2024/02/01 13:02:51 by mariverg         ###   ########.fr       */
+/*   Created: 2024/01/30 17:44:04 by mariverg          #+#    #+#             */
+/*   Updated: 2024/02/01 13:03:47 by mariverg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-//para imprimir el %s
-int	ft_putstr(char *str)
+//imprimir %p
+static void	ft_putnbr_hex(unsigned long nbr, int *len)
 {
-	int	i;
+	if (nbr >= 16)
+		ft_putnbr_hex(nbr / 16, len);
+	ft_putchar("0123456789abcdef"[nbr % 16]);
+	*len += 1;
+}
 
-	i = 0;
-	if (str == NULL)
-		str = "(null)";
-	while (str[i] != '\0')
+int	ft_putptr(void *ptr)
+{
+	int				count;
+	unsigned long	nbr;
+
+	write(1, "0x", 2);
+	count = 2;
+	nbr = (unsigned long)ptr;
+	if (!nbr)
 	{
-		write(1, &str[i], 1);
-		i++;
+		ft_putchar('0');
+		count++;
 	}
-	return (i);
+	else
+		ft_putnbr_hex(nbr, &count);
+	return (count);
 }

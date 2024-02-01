@@ -1,57 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_putnbr_unsigned.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mariverg <mariverg@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/19 11:34:52 by mariverg          #+#    #+#             */
-/*   Updated: 2024/02/01 12:52:07 by mariverg         ###   ########.fr       */
+/*   Created: 2024/02/01 11:42:19 by mariverg          #+#    #+#             */
+/*   Updated: 2024/02/01 12:51:48 by mariverg         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-// para imprimir el %d o %i
-static int	ft_putnbr_aux(int nb)
-{
-	(void)nb;
-	if (write(1, "-2147483648", 11) != 11)
-		return (-1);
-	return (11);
-}
-
-int	ft_putnbr(int nb)
+//imprimir %u
+int	ft_putnbr_unsigned(unsigned int nbr)
 {
 	int	count;
 
 	count = 0;
-	if (nb == -2147483648)
-		return (ft_putnbr_aux(nb));
-	if (nb < 0)
+	if (nbr > 9)
 	{
-		if (ft_putchar('-'))
-			nb = -nb;
-		count++;
-	}
-	if (nb > 9)
-	{
-		count += ft_putnbr(nb / 10);
+		count += ft_putnbr_unsigned(nbr / 10);
 		if (count == -1)
 			return (-1);
-		nb = nb % 10;
+		nbr = nbr % 10;
 	}
-	if (nb <= 9)
+	if (nbr <= 9)
 	{
-		if (ft_putchar('0' + nb) != 1)
+		if (ft_putchar('0' + nbr) != 1)
 			return (-1);
 		count++;
 	}
 	return (count);
 }
-/* int main()
-{
-	int str = 15829;
-	ft_printf(" numero es :%d", str);
-	return (0); */
-// }
